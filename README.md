@@ -12,13 +12,19 @@ Plan
 Based on our experiences on web development and data science, as well as the descriptions mentioned above, we take _Feb, 2016_ as the __1st stage__ with the __primary__ goal of __prototyping__ our application following the development guild lines mentioned below. Here's the tentative timeline.
 
 * __[2016/02/08 - 2016/02/12]__ Project Selection, Plan Discussion, Proposal Draft Writing, Resource Discovery
-* __[2016/02/13 - 2016/02/28]__ System Design, Project Implementation
+* __[2016/02/13 - 2016/03/07]__ System Design, Project Implementation
     * Web Crawler
     * Exploratory Analyzer / Recommender
     * Data Visualization
 * __[2016/03/08 - 2016/03/15]__ Document Writing, User Manual Writing and Video Presentation Making
 
 _Details of each schedule and task will be added later._
+
+Project management
+------------------
+
+[Pikachu@Taigo.io](https://tree.taiga.io/project/aaronice-pikachu/)
+
 
 Resource
 --------
@@ -44,8 +50,12 @@ Development Guild Lines
 Reference
 ---------
 
+- [node-simplecrawler](https://github.com/cgiffard/node-simplecrawler)
+- [cheerio](https://github.com/cheeriojs/cheerio)
+- [Node.js Web Crawler Tutorials](https://potentpages.com/web-crawler-tutorials/nodejs/)
+
 - Python Crawler: http://scrapy.org/
-- BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/ 
+- BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/
 
 
 Owner
