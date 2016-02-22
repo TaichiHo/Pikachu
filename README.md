@@ -23,7 +23,7 @@ _Details of each schedule and task will be added later._
 Project management
 ------------------
 
-[Pikachu@Taigo.io](https://tree.taiga.io/project/aaronice-pikachu/)
+[Pikachu@Trello](https://trello.com/b/VxeNSfp5/xiachufang-crawler-recommendation)
 
 
 Resource
