@@ -4,11 +4,13 @@ var Crawler = require("simplecrawler");
 var cheerio = require('cheerio');
 var fs = require('fs');
 var config = require('../config.js');
+// var randUserAgent = require('random-ua');
 // var request = require('request');
 // var url = require('url');
 // var parseRobots = require("robots-parser");
 
 var xcfParser = require('../parsers/xcfParser');
+var xcfQueue = require('../resources/xcfQueue');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -49,10 +51,17 @@ router.get('/', function(req, res, next) {
   var crawler = new Crawler(targetUrl, initialPath, initialPort);
 
   crawler.useProxy = true;
-  crawler.interval = 2000;
+  crawler.interval = 500;
   crawler.maxConcurrency = 2;
   crawler.maxDepth = 4;
   crawler.acceptCookies = false;
+
+  if (xcfQueue != null && xcfQueue.length > 0) {
+    for (var i = 0; i < xcfQueue.length; i++) {
+      crawler.queueURL(xcfQueue[i]);
+    }
+  }
+  // crawler.queueURL("http://www.xiachufang.com/recipe/100536063/");
 
   rotateIP();
   rotateUserAgent();
@@ -78,7 +87,7 @@ router.get('/', function(req, res, next) {
     console.log("-----------------------------------------");
   }
 
-  setInterval(rotateIP, 3000);
+  setInterval(rotateIP, 1000);
 
   function rotateIP() {
     var rand = parseInt(Math.random() * IP_POOL.length);

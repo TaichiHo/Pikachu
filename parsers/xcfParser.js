@@ -1,5 +1,6 @@
 var cheerio = require('cheerio');
 var fs = require('fs');
+var DataStorage = require('../services/DataStorage');
 
 var xcfParser = function (queueItem, responseBuffer) {
   var $ = cheerio.load(responseBuffer);
@@ -18,6 +19,10 @@ var xcfParser = function (queueItem, responseBuffer) {
         );
       });
       console.log(category);
+
+      // Save to MongoDB
+      DataStorage.saveCategory(category);
+
       var categoryJSON = JSON.stringify(category) + "\n";
       fs.appendFile('./data/category.txt', categoryJSON, function(err) {
         if (err) {
@@ -30,7 +35,7 @@ var xcfParser = function (queueItem, responseBuffer) {
   }
 
   // Fetch Recipe data
-  if (queueItem.url.match(/(\/recipe\/)/i)) {
+  if (queueItem.url.match(/(\/recipe\/)/i) && !queueItem.url.match(/(\/dishes\/)/i)) {
     try {
       var recipe = {};
       recipe.id = queueItem.url.match(/\/recipe\/([0-9]*)/i)[1];
@@ -49,6 +54,9 @@ var xcfParser = function (queueItem, responseBuffer) {
         recipe.categories.push(e.attribs.href.match(/\/category\/([0-9]*)/i)[1]); // TODO
       });
       console.log(recipe);
+
+      // Save to MongoDB
+      DataStorage.saveRecipe(recipe);
 
       var recipeJSON = JSON.stringify(recipe) + "\n";
       fs.appendFile('./data/recipe.txt', recipeJSON, function(err) {
