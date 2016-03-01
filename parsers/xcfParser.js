@@ -38,11 +38,18 @@ var xcfParser = function (queueItem, responseBuffer) {
       recipe.rating = parseFloat($(".score").find(".number").text());
       recipe.cooked = parseInt($(".cooked").find(".number").text());
       recipe.dishes = parseInt($(".recipe-dishes-title").find(".num").text());
+
+      recipe.ingredients = [];
+      $(".ings").find("tr").find(".name").each(function(i, e) {
+          recipe.ingredients.push($(this).text().trim());
+      });
+
       recipe.categories = [];
       $(".recipe-cats").find("a").each(function(i, e){
         recipe.categories.push(e.attribs.href.match(/\/category\/([0-9]*)/i)[1]); // TODO
       });
       console.log(recipe);
+
       var recipeJSON = JSON.stringify(recipe) + "\n";
       fs.appendFile('./data/recipe.txt', recipeJSON, function(err) {
         if (err) {
