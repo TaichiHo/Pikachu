@@ -1,0 +1,12 @@
+---
+applications:
+- name: Pikachu
+  memory: 256M
+  domain: mybluemix.net
+  instances: 1
+  command: npm start
+  host: pikachu-dev
+  env:
+    MONGOLAB_URI: ""
+  services:
+  - mLab
