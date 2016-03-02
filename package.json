@@ -31,6 +31,7 @@
     "helmet": "^1.2.0",
     "mongoose": "^4.4.5",
     "morgan": "~1.6.1",
+    "random-ua": "0.0.6",
     "request": "^2.69.0",
     "serve-favicon": "~2.3.0",
     "simplecrawler": "^0.6.2"

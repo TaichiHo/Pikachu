@@ -4,7 +4,7 @@ var Crawler = require("simplecrawler");
 var cheerio = require('cheerio');
 var fs = require('fs');
 var config = require('../config.js');
-// var randUserAgent = require('random-ua');
+var random_ua = require('random-ua');
 // var request = require('request');
 // var url = require('url');
 // var parseRobots = require("robots-parser");
@@ -13,7 +13,7 @@ var xcfParser = require('../parsers/xcfParser');
 var xcfQueue = require('../resources/xcfQueue');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
 
   var IP_FileName = "ip_list.txt";
   var IP_FilePath = "./resources/"
@@ -31,19 +31,6 @@ router.get('/', function(req, res, next) {
     });
   }
 
-  // IDEA: Consider using `random-useragent` module
-  var UserAgent_FileName = "user-agent_list.txt";
-  var UserAgent_FilePath = "./resources/"
-  var UserAgent_File = UserAgent_FilePath + UserAgent_FileName;
-
-  var UserAgent_Data = fs.readFileSync(UserAgent_File).toString();
-  var UserAgent_Line = UserAgent_Data.split('\n');
-
-  var USER_AGENT_POOL = [];
-  for (var i = 0; i < UserAgent_Line.length - 1; i++) {
-    USER_AGENT_POOL.push(UserAgent_Line[i].trim());
-  }
-
   var targetUrl = config.targetUrl;
   var initialPort = config.initialPort;
   var initialPath = config.initialPath;
@@ -52,8 +39,8 @@ router.get('/', function(req, res, next) {
 
   crawler.useProxy = true;
   crawler.interval = 500;
-  crawler.maxConcurrency = 2;
-  crawler.maxDepth = 4;
+  crawler.maxConcurrency = 5;
+  crawler.maxDepth = 5;
   crawler.acceptCookies = false;
 
   if (xcfQueue != null && xcfQueue.length > 0) {
@@ -78,16 +65,20 @@ router.get('/', function(req, res, next) {
 
   function queueStats() {
     console.log("-----------------------------------------");
-    console.log("The maximum request latency was %dms.",
+    console.log("maximum request latency was %dms.",
       crawler.queue.max("requestLatency"));
-    console.log("The minimum download time was %dms.",
+    console.log("minimum download time was %dms.",
       crawler.queue.min("downloadTime"));
-    console.log("The average resource size received is %d bytes.",
+    console.log("average resource size received is %d bytes.",
       crawler.queue.avg("actualDataSize"));
+    console.log("number of completed queue item: %d.",
+      crawler.queue.complete());
+    console.log("number of failed queue item: %d.",
+      crawler.queue.errors());
     console.log("-----------------------------------------");
   }
 
-  setInterval(rotateIP, 1000);
+  setInterval(rotateIP, 800);
 
   function rotateIP() {
     var rand = parseInt(Math.random() * IP_POOL.length);
@@ -99,9 +90,7 @@ router.get('/', function(req, res, next) {
   setInterval(rotateUserAgent, 1000);
 
   function rotateUserAgent() {
-    var rand = parseInt(Math.random() * USER_AGENT_POOL.length);
-    var uaIndex = Math.min(Math.max(0, rand), USER_AGENT_POOL.length -1);
-    crawler.userAgent = USER_AGENT_POOL[uaIndex];
+    crawler.userAgent = random_ua.generate();
   }
 
   // Crawler event handlers
@@ -114,6 +103,10 @@ router.get('/', function(req, res, next) {
     console.log("fetchStart", queueItem.url);
     console.log(crawler.userAgent);
     console.log(crawler.proxyHostname + ":" + crawler.proxyPort);
+  });
+
+  crawler.on("queueadd", function(queueItem) {
+    console.log("queueadd: " + queueItem.url);
   });
 
   crawler.on("fetcherror", function(queueItem, response) {
