@@ -35,7 +35,15 @@ var xcfParser = function (queueItem, responseBuffer) {
   }
 
   // Fetch Recipe data
-  if (queueItem.url.match(/(\/recipe\/)/i) && !queueItem.url.match(/(\/dishes\/)/i)) {
+  // Exclude create_dish, dishes, answers, menu, comments, questions
+  if (queueItem.url.match(/(\/recipe\/)/i) &&
+    !queueItem.url.match(/(\/dishes\/)/i) &&
+    !queueItem.url.match(/(\/create_dish\/)/i) &&
+    !queueItem.url.match(/(\/answers\/)/i) &&
+    !queueItem.url.match(/(\/questions\/)/i) &&
+    !queueItem.url.match(/(\/menu\/)/i) &&
+    !queueItem.url.match(/(\/comments\/)/i)
+    ) {
     try {
       var recipe = {};
       recipe.id = queueItem.url.match(/\/recipe\/([0-9]*)/i)[1];
@@ -43,6 +51,20 @@ var xcfParser = function (queueItem, responseBuffer) {
       recipe.rating = parseFloat($(".score").find(".number").text());
       recipe.cooked = parseInt($(".cooked").find(".number").text());
       recipe.dishes = parseInt($(".recipe-dishes-title").find(".num").text());
+      recipe.image = $('.image').find("img").attr("src").split("?")[0];
+
+      recipe.likes = 0;
+      recipe.comments = 0;
+      recipe.dateCreated = $("meta[itemprop=dateCreated]").attr("content");
+
+      $("meta[itemprop=interactionCount]").each(function(i, e) {
+        if (e.attribs.content.startsWith("UserLikes")) {
+          recipe.likes = Number(e.attribs.content.split(':')[1]);
+        }
+        if (e.attribs.content.startsWith("UserComments")) {
+          recipe.comments = Number(e.attribs.content.split(':')[1]);
+        }
+      });
 
       recipe.ingredients = [];
       $(".ings").find("tr").find(".name").each(function(i, e) {
@@ -58,12 +80,14 @@ var xcfParser = function (queueItem, responseBuffer) {
       // Save to MongoDB
       DataStorage.saveRecipe(recipe);
 
+      // Save to file
       var recipeJSON = JSON.stringify(recipe) + "\n";
       fs.appendFile('./data/recipe.txt', recipeJSON, function(err) {
         if (err) {
           console.log(err);
         }
       });
+
     } catch (e) {
       console.log(e);
     }

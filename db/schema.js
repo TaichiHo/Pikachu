@@ -11,11 +11,15 @@ var categorySchema = new mongoose.Schema({
   }]
 });
 
+// http://schema.org/Recipe
 var recipeSchema = new mongoose.Schema({
   _id: { type: String },
   name: {
     type: String,
     reqired: true
+  },
+  image: {
+    type: String
   },
   rating: {
     type: Number
@@ -25,6 +29,15 @@ var recipeSchema = new mongoose.Schema({
   },
   dishes: {
     type: Number
+  },
+  likes: {
+    type: Number
+  },
+  comments: {
+    type: Number
+  },
+  dateCreated: {
+    type: String
   },
   ingredients: [{
     type: String

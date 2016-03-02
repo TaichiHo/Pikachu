@@ -9,9 +9,13 @@ exports.saveRecipe = function saveRecipe(recipe) {
   var newRecipe = new Recipe({
     _id: "recipe:" + recipe.id,
     name: recipe.name,
+    image: recipe.image,
     rating: recipe.rating,
     cooked: recipe.cooked,
     dishes: recipe.dishes,
+    likes: recipe.likes,
+    comments: recipe.comments,
+    dateCreated: recipe.dateCreated,
     ingredients: recipe.ingredients,
     categories: recipe.categories
   });
