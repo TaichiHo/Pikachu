@@ -32,12 +32,13 @@ Resource
 1. __[BitTiger Project: AppStore - Website]__ https://slack-files.com/T0GUEMKEZ-F0J4G9QTT-274d3bc97e
 
 
-Language & Framework
+Language & Framework & Tech Stack
 --------------------
 
-+ Javascript: React.js, Node.js, Flux/Redux, Express.js
++ Javascript: Node.js, Express.js, AngularJS
++ Database: MongoDB
++ Cloud Platform: Cloud Foundry
 
-_To be modified later._
 
 Development Guild Lines
 -----------------------
@@ -50,12 +51,36 @@ Development Guild Lines
 Reference
 ---------
 
+**Crawler**
+
 - [node-simplecrawler](https://github.com/cgiffard/node-simplecrawler)
 - [cheerio](https://github.com/cheeriojs/cheerio)
 - [Node.js Web Crawler Tutorials](https://potentpages.com/web-crawler-tutorials/nodejs/)
 
-- Python Crawler: http://scrapy.org/
-- BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/
+**MEAN Stack**
+
+MEAN is an acronym for MongoDB, Express.js , Angular.js and Node.js
+
+MongoDB: *MongoDB is an open-source, document database (NoSQL) designed for ease of development and scaling.*
+
+- [MongoDBx: M101x Introduction to MongoDB using the MEAN Stack](https://courses.edx.org/courses/course-v1:MongoDBx+M101x+3T2015/)
+- [M101JS: MongoDB for Node.js Developers](https://university.mongodb.com/courses/M101JS/)
+- [www.mongodb.org](https://www.mongodb.org/)
+- [mongoose](http://mongoosejs.com/)
+
+Express.js: *Fast, unopinionated, minimalist web framework for Node.js.*
+
+- [Expressjs.com](http://expressjs.com/)
+
+Angular.js: *Angular is a development platform for building mobile and desktop web applications.*
+
+- [AngularJS](https://angularjs.org/)
+
+Node.js: *Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.*
+
+- [nodejs.org](https://nodejs.org/en/)
+- [npm](https://www.npmjs.com/)
+
 
 
 Owner
