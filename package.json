@@ -1,5 +1,5 @@
 {
-  "name": "Pikach",
+  "name": "Pikachu",
   "version": "0.0.1",
   "description": "A simple Node.js based web crawler",
   "main": "app.js",
@@ -13,6 +13,8 @@
   "keywords": [
     "node.js",
     "web",
+    "mongodb",
+    "search",
     "crawler"
   ],
   "author": "aaronice",

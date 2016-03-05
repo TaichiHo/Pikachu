@@ -9,7 +9,7 @@ var helmet = require('helmet')
 
 var routes = require('./routes/index');
 var crawler = require('./routes/crawler');
-
+var api = require('./routes/api');
 
 var app = express();
 
@@ -39,6 +39,7 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/crawler', crawler);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
