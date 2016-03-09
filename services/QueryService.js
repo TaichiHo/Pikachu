@@ -8,6 +8,7 @@ function searchRecipe(q, callback) {
   Recipe.collection.find({
     ingredients: q
   })
+  .limit(100)
   .sort({
     likes: -1,
     rating: -1,
