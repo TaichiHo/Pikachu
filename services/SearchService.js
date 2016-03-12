@@ -43,7 +43,10 @@ function searchRecipe(q, callback) {
                 "functions": [
                     {
                         "field_value_factor": {
-                            "field": "likes"
+                            "field": "likes",
+                            "factor": 1,
+                            "modifier": "log1p",
+                            "missing": 1
                         }
                     },
                     {
@@ -53,12 +56,18 @@ function searchRecipe(q, callback) {
                     },
                     {
                         "field_value_factor": {
-                            "field": "dishes"
+                            "field": "dishes",
+                            "factor": 1,
+                            "modifier": "log1p",
+                            "missing": 1
                         }
                     },
                     {
                         "field_value_factor": {
-                            "field": "cooked"
+                            "field": "cooked",
+                            "factor": 1,
+                            "modifier": "log1p",
+                            "missing": 1
                         }
                     }
                 ],
