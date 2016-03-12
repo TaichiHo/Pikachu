@@ -30,19 +30,42 @@ function searchRecipe(q, callback) {
     index: 'pikachu',
     type: 'recipes',
     body: {
-      query: {
-        match: {
-          name: q
+        "query": {
+            "function_score": {
+                "query": {
+                    "match_all": {}
+                },
+                "filter": {
+                    "term": {
+                        "name": q
+                    }
+                },
+                "functions": [
+                    {
+                        "field_value_factor": {
+                            "field": "likes"
+                        }
+                    },
+                    {
+                        "field_value_factor": {
+                            "field": "rating"
+                        }
+                    },
+                    {
+                        "field_value_factor": {
+                            "field": "dishes"
+                        }
+                    },
+                    {
+                        "field_value_factor": {
+                            "field": "cooked"
+                        }
+                    }
+                ],
+                "boost_mode": "multiply"
+            }
         }
-      }
-    },
-    sort : [
-        { 'rating': "desc"},
-        { 'likes': "desc" },
-        { 'dishes': "desc" },
-        { 'cooked': "desc"},
-        {"_score": "desc"}
-    ]
+    }
   }).then(function (res) {
       var hits = [];
       if (res && res.hits && res.hits.hits) {
@@ -56,3 +79,4 @@ function searchRecipe(q, callback) {
 }
 
 exports.searchRecipe = searchRecipe;
+
